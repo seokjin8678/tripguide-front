@@ -1,6 +1,5 @@
 import React from 'react';
 import MainNavigation from './MainNavigation';
-import classes from './Layout.module.css';
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -8,11 +7,9 @@ interface LayoutProps {
 
 const Layout = (props: LayoutProps) => {
     return (
-        <div>
+        <div className="leading-normal tracking-normal text-white gradient">
             <MainNavigation/>
-            <main className={classes.main}>
-                {props.children}
-            </main>
+            {props.children}
         </div>
     );
 };
