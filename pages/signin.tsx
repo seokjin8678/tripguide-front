@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import Layout from '../components/layout/Layout';
 
@@ -30,7 +31,8 @@ const SignIn = (props: SignInProps) => {
                             </div>
                             <div className="flex justify-end">
                                 <a href="#"
-                                   className="text-sm text-purple-600 hover:text-purple-700 hover:underline mb-6">비밀번호를 잊으셨나요?</a>
+                                   className="text-sm text-purple-600 hover:text-purple-700 hover:underline mb-6">비밀번호를
+                                    잊으셨나요?</a>
                             </div>
                             <button
                                 className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"
@@ -41,10 +43,12 @@ const SignIn = (props: SignInProps) => {
                 </main>
 
                 <div className="max-w-lg mx-auto text-center mt-12 mb-6">
-                    <p className="text-white">계정이 없으신가요? <a href="#" className="font-bold hover:underline">회원가입</a>.</p>
+                    <p className="text-white">계정이 없으신가요?&nbsp;
+                        <Link href="/signup" className="font-bold hover:underline">회원가입</Link>
+                    </p>
                 </div>
             </div>
         </Layout>
-    )
-}
+    );
+};
 export default SignIn;
