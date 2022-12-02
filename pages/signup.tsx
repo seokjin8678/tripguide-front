@@ -1,5 +1,7 @@
 import React from 'react';
 import Layout from '../components/layout/Layout';
+import Input from '../components/ui/Input';
+import Button from '../components/ui/Button';
 
 interface SignUpProps {
 
@@ -16,28 +18,12 @@ const SignUp = (props: SignUpProps) => {
 
                     <section className="mt-10">
                         <form className="flex flex-col" method="POST" action="#">
-                            <div className="mb-6 pt-3 rounded bg-gray-200">
-                                <label className="block text-gray-700 text-sm font-bold mb-2 ml-3"
-                                       htmlFor="email">Email</label>
-                                <input type="text" id="email"
-                                       className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-purple-600 transition duration-500 px-3 pb-3"/>
-                            </div>
-                            <div className="mb-6 pt-3 rounded bg-gray-200">
-                                <label className="block text-gray-700 text-sm font-bold mb-2 ml-3"
-                                       htmlFor="password">Password</label>
-                                <input type="password" id="password"
-                                       className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-purple-600 transition duration-500 px-3 pb-3"/>
-                            </div>
-                            <div className="mb-6 pt-3 rounded bg-gray-200">
-                                <label className="block text-gray-700 text-sm font-bold mb-2 ml-3"
-                                       htmlFor="password">Confirm Password</label>
-                                <input type="password" id="confirmPassword"
-                                       className="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-purple-600 transition duration-500 px-3 pb-3"/>
-                            </div>
-                            <button
-                                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"
-                                type="submit">회원가입
-                            </button>
+                            <Input id="email" type="email">Email</Input>
+                            <Input id="password" type="password">Password</Input>
+                            <Input id="confirmPassword" type="password">Confirm Password</Input>
+                            <Button type="submit">
+                                회원가입
+                            </Button>
                         </form>
                     </section>
                 </main>
