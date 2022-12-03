@@ -21,6 +21,7 @@ const SignUp = (props: SignUpProps) => {
     const [nicknameValidation, setNicknameValidation] = useState('');
     const [passwordValidation, setPasswordValidation] = useState('');
     const [confirmPasswordValidation, setConfirmPasswordValidation] = useState('');
+    const [modalMessage, setModalMessage] = useState('');
     const router = useRouter();
 
     const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -55,9 +56,16 @@ const SignUp = (props: SignUpProps) => {
                 nickNameInputRef.current!.value = '';
                 passwordInputRef.current!.value = '';
                 confirmPasswordInputRef.current!.value = '';
+                setModalMessage('회원가입이 정상적으로 되었습니다!');
                 setShowModal(true);
             }
         } catch (err: any) {
+            if (err.code === 'ERR_NETWORK') {
+                setModalMessage('서버에 연결할 수 없습니다!');
+                setShowModal(true);
+                return;
+            }
+            console.log(err);
             const validation = err.response.data.validation;
             Object.keys(validation).forEach(key => {
                 if (key === 'email') {
@@ -93,7 +101,7 @@ const SignUp = (props: SignUpProps) => {
                 <Modal.Body>
                     <div className="text-center">
                         <h3 className="mb-5 text-lg font-normal  dark:text-gray-400">
-                            회원가입이 정상적으로 되었습니다!
+                            {modalMessage}
                         </h3>
                         <div className="flex justify-center gap-4">
                             <Button color="info" onClick={() => {
@@ -105,8 +113,8 @@ const SignUp = (props: SignUpProps) => {
                     </div>
                 </Modal.Body>
             </Modal>
-            <div className="body-bg min-h-screen -z-30 pt-8 md:pt-10 px-2 md:px-0">
-                <main className="bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
+            <div className="body-bg px-2 md:px-0">
+                <main className="bg-white max-w-lg mx-auto p-8 md:p-12 rounded-lg shadow-2xl">
                     <section>
                         <h3 className="font-bold text-gray-700 text-2xl">새로운 계정을 등록합니다.</h3>
                     </section>
@@ -129,7 +137,7 @@ const SignUp = (props: SignUpProps) => {
                                      helperText={confirmPasswordValidation ? confirmPasswordValidation : undefined}
                                      id="confirmPassword" type="password"
                                      ref={confirmPasswordInputRef}/>
-                            <MyButton className="mt-4 bg-blue-600" type="submit">
+                            <MyButton className="mt-8 bg-blue-600" type="submit">
                                 회원가입
                             </MyButton>
                         </form>

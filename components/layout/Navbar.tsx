@@ -14,9 +14,9 @@ const MyNavbar = (props: MyNavbarProps) => {
     return (
         <Navbar fluid={true} rounded={false} className="bg-blue-600">
             <Navbar.Brand href="/">
-            <span className="self-center whitespace-nowrap text-xl font-semibold text-white">
-                TripGuide
-            </span>
+                <span className="self-center whitespace-nowrap text-2xl font-semibold text-white">
+                    TripGuide
+                </span>
             </Navbar.Brand>
             <Navbar.Toggle className="text-white"/>
             <Navbar.Collapse>

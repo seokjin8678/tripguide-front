@@ -48,8 +48,8 @@ const SignIn = (props: SignInProps) => {
 
     return (
         <Layout>
-            <div className="body-bg min-h-screen -z-30 pt-8 md:pt-10 px-2 md:px-0">
-                <main className="bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
+            <div className="body-bg px-2 md:px-0">
+                <main className="bg-white max-w-lg mx-auto p-8 md:p-12 rounded-lg shadow-2xl">
                     <section>
                         <h3 className="font-bold text-gray-700 text-2xl">환영합니다.</h3>
                     </section>

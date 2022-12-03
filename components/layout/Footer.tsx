@@ -14,11 +14,11 @@ const Footer = (props: FooterProps) => {
                     <Link href="/" className="ml-1 hover:underline">TripGuide™</Link>
                 </span>
             </div>
-            <ul data-testid="footer-groupLink" className="flex flex-wrap text-sm text-white dark:text-white">
-                <li className="last:mr-0 md:mr-6"><Link href="/" className="hover:underline">About</Link></li>
-                <li className="last:mr-0 md:mr-6"><Link href="/" className="hover:underline">Privacy Policy</Link></li>
-                <li className="last:mr-0 md:mr-6"><Link href="/" className="hover:underline">Licensing</Link></li>
-                <li className="last:mr-0 md:mr-6"><Link href="/" className="hover:underline">Contact</Link></li>
+            <ul className="flex flex-wrap text-sm text-white dark:text-white">
+                <li className="mr-3 md:mr-6"><Link href="/" className="hover:underline">About</Link></li>
+                <li className="mr-3 md:mr-6"><Link href="/" className="hover:underline">Privacy Policy</Link></li>
+                <li className="mr-3 md:mr-6"><Link href="/" className="hover:underline">Licensing</Link></li>
+                <li className="mr-3 md:mr-6"><Link href="/" className="hover:underline">Contact</Link></li>
             </ul>
         </footer>
     );

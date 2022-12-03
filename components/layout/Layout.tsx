@@ -11,9 +11,7 @@ const Layout = (props: LayoutProps) => {
         <React.Fragment>
             <div className="flex flex-col h-screen justify-between">
                 <MyNavbar/>
-                <div className="mb-auto">
-                    {props.children}
-                </div>
+                {props.children}
                 <Footer/>
             </div>
         </React.Fragment>
