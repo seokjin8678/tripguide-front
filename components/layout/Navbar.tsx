@@ -1,10 +1,16 @@
 import { Navbar } from 'flowbite-react';
 import React from 'react';
+import { useRouter } from 'next/router';
 
 interface MyNavbarProps {
 }
 
 const MyNavbar = (props: MyNavbarProps) => {
+    const router = useRouter();
+    let currentURL = router.asPath;
+    if (router.pathname === '/signin') {
+        currentURL = '/';
+    }
     return (
         <Navbar fluid={true} rounded={false} className="bg-blue-600">
             <Navbar.Brand href="/">
@@ -26,7 +32,7 @@ const MyNavbar = (props: MyNavbarProps) => {
                 <Navbar.Link href="/" className="text-white hover:text-black">
                     Pricing
                 </Navbar.Link>
-                <Navbar.Link href="/signin" className="text-white hover:text-black">
+                <Navbar.Link href={`/signin?redirect=${currentURL}`} className="text-white hover:text-black">
                     로그인
                 </Navbar.Link>
             </Navbar.Collapse>
