@@ -7,6 +7,8 @@ import MyButton from '../components/ui/MyButton';
 import { api } from '../utils/axios';
 import { SignInRequest } from '../models/SignInRequest';
 import { useRouter } from 'next/router';
+import { useAppDispatch } from '../hooks';
+import { authActions } from '../store/slices/authSlice';
 
 interface SignInProps {
 
@@ -18,6 +20,7 @@ const SignIn = (props: SignInProps) => {
     const [emailValidation, setEmailValidation] = useState('');
     const [passwordValidation, setPasswordValidation] = useState('');
     const router = useRouter();
+    const dispatch = useAppDispatch();
 
     const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -34,7 +37,7 @@ const SignIn = (props: SignInProps) => {
 
         try {
             const res = await api.post(url, signInRequest);
-            console.log(res.data.result);
+            dispatch(authActions.signIn(res.data.result))
             if (router.query.redirect) {
                 router.push(router.query.redirect.toString());
             } else {

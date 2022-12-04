@@ -1,7 +1,14 @@
 import type { NextPage } from 'next';
 import Layout from '../components/layout/Layout';
+import { useAppSelector } from '../hooks';
 
 const Home: NextPage = () => {
+    const auth = useAppSelector(state => state.auth);
+
+    const test = () => {
+        console.log(auth);
+    }
+
     return (
         <Layout>
             <div className="pt-24 ">
@@ -16,7 +23,7 @@ const Home: NextPage = () => {
                         <p className="leading-normal text-2xl mb-8 w-full">
                             다른 사람은 어떤 여행 계획을 작성했을까요?
                         </p>
-                        <button
+                        <button onClick={test}
                             className="mx-auto md:mx-0 bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
                             둘러보기
                         </button>
