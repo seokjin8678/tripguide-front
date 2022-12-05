@@ -7,7 +7,7 @@ import MyButton from '../components/ui/MyButton';
 import { api } from '../utils/axios';
 import { SignInRequest } from '../models/SignInRequest';
 import { useRouter } from 'next/router';
-import { useAppDispatch } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { authActions } from '../store/slices/authSlice';
 
 interface SignInProps {
@@ -21,6 +21,10 @@ const SignIn = (props: SignInProps) => {
     const [passwordValidation, setPasswordValidation] = useState('');
     const router = useRouter();
     const dispatch = useAppDispatch();
+    const isLogin = useAppSelector(state => state.auth.isLogin);
+    if (isLogin) {
+        router.push('/');
+    }
 
     const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -37,7 +41,8 @@ const SignIn = (props: SignInProps) => {
 
         try {
             const res = await api.post(url, signInRequest);
-            dispatch(authActions.signIn(res.data.result))
+            api.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.result;
+            dispatch(authActions.signIn(res.data.result));
             if (router.query.redirect) {
                 router.push(router.query.redirect.toString());
             } else {
@@ -51,7 +56,7 @@ const SignIn = (props: SignInProps) => {
 
     return (
         <Layout>
-            <div className="body-bg px-2 md:px-0">
+            <div className="body-bg px-8 md:px-0">
                 <main className="bg-white max-w-lg mx-auto p-8 md:p-12 rounded-lg shadow-2xl">
                     <section>
                         <h3 className="font-bold text-gray-700 text-2xl">환영합니다.</h3>

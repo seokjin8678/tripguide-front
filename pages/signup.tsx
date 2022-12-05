@@ -6,6 +6,7 @@ import { api } from '../utils/axios';
 import MyButton from '../components/ui/MyButton';
 import { SignUpRequest } from '../models/SignUpRequest';
 import { useRouter } from 'next/router';
+import { useAppSelector } from '../hooks';
 
 
 interface SignUpProps {
@@ -23,6 +24,10 @@ const SignUp = (props: SignUpProps) => {
     const [confirmPasswordValidation, setConfirmPasswordValidation] = useState('');
     const [modalMessage, setModalMessage] = useState('');
     const router = useRouter();
+    const isLogin = useAppSelector(state => state.auth.isLogin);
+    if (isLogin) {
+        router.push('/');
+    }
 
     const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -95,8 +100,7 @@ const SignUp = (props: SignUpProps) => {
             <Modal show={showModal}
                    size="md"
                    popup={true}
-                   onClose={modalClose}
-            >
+                   onClose={modalClose}>
                 <Modal.Header/>
                 <Modal.Body>
                     <div className="text-center">
@@ -113,7 +117,7 @@ const SignUp = (props: SignUpProps) => {
                     </div>
                 </Modal.Body>
             </Modal>
-            <div className="body-bg px-2 md:px-0">
+            <div className="body-bg px-8 md:px-0">
                 <main className="bg-white max-w-lg mx-auto p-8 md:p-12 rounded-lg shadow-2xl">
                     <section>
                         <h3 className="font-bold text-gray-700 text-2xl">새로운 계정을 등록합니다.</h3>
