@@ -9,11 +9,11 @@ import { useRouter } from 'next/router';
 import { useAppSelector } from '../hooks';
 
 
-interface SignUpProps {
+interface SignUpPageProps {
 
 }
 
-const SignUp = (props: SignUpProps) => {
+const SignUpPage = (props: SignUpPageProps) => {
     const emailInputRef = useRef<HTMLInputElement>(null);
     const passwordInputRef = useRef<HTMLInputElement>(null);
     const confirmPasswordInputRef = useRef<HTMLInputElement>(null);
@@ -26,7 +26,7 @@ const SignUp = (props: SignUpProps) => {
     const router = useRouter();
     const isLogin = useAppSelector(state => state.auth.isLogin);
     if (isLogin) {
-        router.push('/');
+        router.replace('/');
     }
 
     const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -151,4 +151,4 @@ const SignUp = (props: SignUpProps) => {
         </Layout>
     );
 };
-export default SignUp;
+export default SignUpPage;

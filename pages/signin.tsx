@@ -10,11 +10,11 @@ import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { authActions } from '../store/slices/authSlice';
 
-interface SignInProps {
+interface SignInPageProps {
 
 }
 
-const SignIn = (props: SignInProps) => {
+const SignInPage = (props: SignInPageProps) => {
     const emailInputRef = useRef<HTMLInputElement>(null);
     const passwordInputRef = useRef<HTMLInputElement>(null);
     const [emailValidation, setEmailValidation] = useState('');
@@ -23,7 +23,7 @@ const SignIn = (props: SignInProps) => {
     const dispatch = useAppDispatch();
     const isLogin = useAppSelector(state => state.auth.isLogin);
     if (isLogin) {
-        router.push('/');
+        router.replace('/');
     }
 
     const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -43,8 +43,9 @@ const SignIn = (props: SignInProps) => {
             const res = await api.post(url, signInRequest);
             api.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.result;
             dispatch(authActions.signIn(res.data.result));
-            if (router.query.redirect) {
-                router.push(router.query.redirect.toString());
+            const redirectUrl = router.query.redirect;
+            if (redirectUrl && redirectUrl !== 'signin') {
+                router.push(redirectUrl.toString());
             } else {
                 router.push('/');
             }
@@ -86,4 +87,4 @@ const SignIn = (props: SignInProps) => {
         </Layout>
     );
 };
-export default SignIn;
+export default SignInPage;
