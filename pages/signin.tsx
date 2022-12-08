@@ -41,7 +41,7 @@ const SignInPage = (props: SignInPageProps) => {
 
         try {
             const res = await api.post(url, signInRequest);
-            api.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.result;
+            api.defaults.headers.common['Authorization'] = res.data.result;
             dispatch(authActions.signIn(res.data.result));
             const redirectUrl = router.query.redirect;
             if (redirectUrl && redirectUrl !== 'signin') {
