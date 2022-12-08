@@ -50,8 +50,9 @@ const SignInPage = (props: SignInPageProps) => {
                 router.push('/');
             }
         } catch (err: any) {
-            setEmailValidation('해당되는 계정이 없거나 비밀번호가 맞지 않습니다.');
-            setPasswordValidation('해당되는 계정이 없거나 비밀번호가 맞지 않습니다.');
+            const validation = err.response.data.validation;
+            setEmailValidation(validation['email']);
+            setPasswordValidation(validation['password']);
         }
     };
 
