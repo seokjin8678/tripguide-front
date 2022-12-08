@@ -28,7 +28,7 @@ const MyNavbar = (props: MyNavbarProps) => {
             <Navbar.Toggle className="text-white"/>
             <Navbar.Collapse>
                 {isLogin && (
-                    <Link href="/plans"
+                    <Link href="/trips"
                           className="block py-2 pr-4 pl-3 md:p-0 border-b border-gray-100  text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white text-white hover:text-black">
                         계획
                     </Link>

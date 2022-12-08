@@ -17,7 +17,7 @@ const Home: NextPage = () => {
                         <p className="leading-normal text-2xl mb-8 w-full">
                             다른 사람은 어떤 여행 계획을 작성했을까요?
                         </p>
-                        <Link href="/plans"
+                        <Link href="/trips"
                               className="mx-auto md:mx-0 bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
                             둘러보기
                         </Link>
