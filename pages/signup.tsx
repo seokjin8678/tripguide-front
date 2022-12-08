@@ -70,20 +70,19 @@ const SignUpPage = (props: SignUpPageProps) => {
                 setShowModal(true);
                 return;
             }
-            console.log(err);
             const validation = err.response.data.validation;
             Object.keys(validation).forEach(key => {
                 if (key === 'email') {
-                    setEmailValidation(validation[key])
+                    setEmailValidation(validation[key]);
                 }
                 if (key === 'nickname') {
-                    setNicknameValidation(validation[key])
+                    setNicknameValidation(validation[key]);
                 }
                 if (key === 'password') {
                     setPasswordValidation(validation[key]);
                 }
                 if (key === 'confirmPassword') {
-                    setConfirmPasswordValidation(validation[key])
+                    setConfirmPasswordValidation(validation[key]);
                 }
             });
         }
