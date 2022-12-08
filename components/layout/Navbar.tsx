@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { authActions } from '../../store/slices/authSlice';
 import Link from 'next/link';
-import { api } from '../../utils/axios';
 
 interface MyNavbarProps {
 }
@@ -15,7 +14,6 @@ const MyNavbar = (props: MyNavbarProps) => {
     const dispatch = useAppDispatch();
 
     const logoutHandler = () => {
-        api.defaults.headers.common['Authorization'] = '';
         dispatch(authActions.signOut());
         router.push('/');
     };

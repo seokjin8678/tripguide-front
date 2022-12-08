@@ -4,11 +4,11 @@ import Layout from '../components/layout/Layout';
 import { Label } from 'flowbite-react';
 import MyInput from '../components/ui/MyInput';
 import MyButton from '../components/ui/MyButton';
-import { api } from '../utils/axios';
 import { SignInRequest } from '../models/SignInRequest';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { authActions } from '../store/slices/authSlice';
+import api from '../utils/axios';
 
 interface SignInPageProps {
 
@@ -41,7 +41,6 @@ const SignInPage = (props: SignInPageProps) => {
 
         try {
             const res = await api.post(url, signInRequest);
-            api.defaults.headers.common['Authorization'] = res.data.result;
             dispatch(authActions.signIn(res.data.result));
             const redirectUrl = router.query.redirect;
             if (redirectUrl && redirectUrl !== 'signin') {

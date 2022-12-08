@@ -2,7 +2,7 @@ import { Button, Label, Modal } from 'flowbite-react';
 import React, { useRef, useState } from 'react';
 import Layout from '../components/layout/Layout';
 import MyInput from '../components/ui/MyInput';
-import { api } from '../utils/axios';
+import api from '../utils/axios';
 import MyButton from '../components/ui/MyButton';
 import { SignUpRequest } from '../models/SignUpRequest';
 import { useRouter } from 'next/router';
