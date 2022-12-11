@@ -92,6 +92,16 @@ const TripsPage = (props: TripsPageProps) => {
                                 <p className="font-normal text-gray-700 dark:text-gray-400">
                                     {trip.desc}
                                 </p>
+                                <hr className="mt-2 h-px bg-gray-400 border-0 dark:bg-gray-400"/>
+                                <div className="py-2 text-end">
+                                    <span
+                                        className={'text-md md:text-sm rounded bg-blue-100 px-2 py-1 font-semibold text-blue-800 dark:bg-blue-200 dark:text-blue-800'}>
+                                        작성자:
+                                        <span className="font-bold">
+                                            {trip.author}
+                                        </span>
+                                    </span>
+                                </div>
                             </MyCard>
                         </Link>
                     );
