@@ -1,4 +1,4 @@
-import { Button, Label, Modal } from 'flowbite-react';
+import { Label } from 'flowbite-react';
 import React, { useRef, useState } from 'react';
 import Layout from '../components/layout/Layout';
 import MyInput from '../components/ui/MyInput';
@@ -6,7 +6,8 @@ import api from '../utils/axios';
 import MyButton from '../components/ui/MyButton';
 import { SignUpRequest } from '../models/SignUpRequest';
 import { useRouter } from 'next/router';
-import { useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { modalActions } from '../store/slices/modalSlice';
 
 
 interface SignUpPageProps {
@@ -22,7 +23,7 @@ const SignUpPage = (props: SignUpPageProps) => {
     const [nicknameValidation, setNicknameValidation] = useState('');
     const [passwordValidation, setPasswordValidation] = useState('');
     const [confirmPasswordValidation, setConfirmPasswordValidation] = useState('');
-    const [modalMessage, setModalMessage] = useState('');
+    const dispatch = useAppDispatch();
     const router = useRouter();
     const isLogin = useAppSelector(state => state.auth.isLogin);
     if (isLogin) {
@@ -61,13 +62,15 @@ const SignUpPage = (props: SignUpPageProps) => {
                 nickNameInputRef.current!.value = '';
                 passwordInputRef.current!.value = '';
                 confirmPasswordInputRef.current!.value = '';
-                setModalMessage('회원가입이 정상적으로 되었습니다!');
-                setShowModal(true);
+                dispatch(modalActions.showModal('회원가입이 정상적으로 되었습니다!'));
+                dispatch(modalActions.setHref({
+                    url: '/signin',
+                    buttonMessage: '로그인 페이지로 이동'
+                }));
             }
         } catch (err: any) {
             if (err.code === 'ERR_NETWORK') {
-                setModalMessage('서버에 연결할 수 없습니다!');
-                setShowModal(true);
+                dispatch(modalActions.showModal('서버가 응답하지 않습니다.'));
                 return;
             }
             const validation = err.response.data.validation;
@@ -88,34 +91,8 @@ const SignUpPage = (props: SignUpPageProps) => {
         }
     };
 
-    const [showModal, setShowModal] = useState(false);
-
-    const modalClose = () => {
-        setShowModal(false);
-    };
-
     return (
         <Layout>
-            <Modal show={showModal}
-                   size="md"
-                   popup={true}
-                   onClose={modalClose}>
-                <Modal.Header/>
-                <Modal.Body>
-                    <div className="text-center">
-                        <h3 className="mb-5 text-lg font-normal  dark:text-gray-400">
-                            {modalMessage}
-                        </h3>
-                        <div className="flex justify-center gap-4">
-                            <Button color="info" onClick={() => {
-                                router.push('/signin');
-                            }}>
-                                로그인 페이지로 이동
-                            </Button>
-                        </div>
-                    </div>
-                </Modal.Body>
-            </Modal>
             <div className="body-bg px-8 md:px-0">
                 <main className="bg-white max-w-lg mx-auto p-8 md:p-12 rounded-lg shadow-2xl">
                     <section>

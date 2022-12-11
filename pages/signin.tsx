@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { authActions } from '../store/slices/authSlice';
 import api from '../utils/axios';
+import { modalActions } from '../store/slices/modalSlice';
 
 interface SignInPageProps {
 
@@ -49,6 +50,10 @@ const SignInPage = (props: SignInPageProps) => {
                 router.push('/');
             }
         } catch (err: any) {
+            if (err.code === 'ERR_NETWORK') {
+                dispatch(modalActions.showModal('서버가 응답하지 않습니다.'));
+                return;
+            }
             const validation = err.response.data.validation;
             setEmailValidation(validation['email']);
             setPasswordValidation(validation['password']);
