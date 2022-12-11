@@ -26,27 +26,28 @@ const TripsPage = (props: TripsPageProps) => {
         try {
             const res = await api.get(`/api/v1/trips?page=${query.page ? query.page : '1'}`);
             const tripPreviews: TripPreview[] = [];
-            const data = res.data.content;
-            for (const key in data) {
+            const data = res.data;
+            const content = res.data.content;
+            for (const key in content) {
                 tripPreviews.push({
-                    id: data[key].id,
-                    title: data[key].title,
-                    desc: data[key].desc,
-                    country: data[key].country,
-                    city: data[key].city,
-                    score: data[key].score,
-                    author: data[key].author
+                    id: content[key].id,
+                    title: content[key].title,
+                    desc: content[key].desc,
+                    country: content[key].country,
+                    city: content[key].city,
+                    score: content[key].score,
+                    author: content[key].author
                 });
             }
             setTripPreviews(tripPreviews);
-            setTotalPages(res.data.totalPages);
-            setCurrentPage(res.data.number);
+            setTotalPages(data.totalPages);
+            setCurrentPage(data.number);
         } catch (e: any) {
-            const response = e.response;
-            if (response.status === 404) {
+            if (e.code === 'ERR_NETWORK') {
                 dispatch(modalActions.showModal('서버가 응답하지 않습니다.'));
                 return;
             }
+            const response = e.response;
             if (response.status === 401) {
                 router.push('/signin');
                 return;
@@ -87,7 +88,7 @@ const TripsPage = (props: TripsPageProps) => {
                                         <p className="text-2lg px-1">{trip.city}</p>
                                     </div>
                                 </div>
-                                <MyRating tripId={trip.id} score={trip.score}/>
+                                <MyRating className='py-2' key={'trip' + trip.id} score={trip.score}/>
                                 <p className="font-normal text-gray-700 dark:text-gray-400">
                                     {trip.desc}
                                 </p>
