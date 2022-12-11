@@ -27,7 +27,7 @@ const SignUpPage = (props: SignUpPageProps) => {
     const router = useRouter();
     const isLogin = useAppSelector(state => state.auth.isLogin);
     if (isLogin) {
-        router.replace('/');
+        router.push('/');
     }
 
     const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -68,26 +68,30 @@ const SignUpPage = (props: SignUpPageProps) => {
                     buttonMessage: '로그인 페이지로 이동'
                 }));
             }
-        } catch (err: any) {
-            if (err.code === 'ERR_NETWORK') {
+        } catch (e: any) {
+            const response = e.response;
+            if (response.status === 404) {
                 dispatch(modalActions.showModal('서버가 응답하지 않습니다.'));
                 return;
             }
-            const validation = err.response.data.validation;
-            Object.keys(validation).forEach(key => {
-                if (key === 'email') {
-                    setEmailValidation(validation[key]);
-                }
-                if (key === 'nickname') {
-                    setNicknameValidation(validation[key]);
-                }
-                if (key === 'password') {
-                    setPasswordValidation(validation[key]);
-                }
-                if (key === 'confirmPassword') {
-                    setConfirmPasswordValidation(validation[key]);
-                }
-            });
+            if (response.status === 400) {
+                const validation = e.response.data.validation;
+                Object.keys(validation).forEach(key => {
+                    if (key === 'email') {
+                        setEmailValidation(validation[key]);
+                    }
+                    if (key === 'nickname') {
+                        setNicknameValidation(validation[key]);
+                    }
+                    if (key === 'password') {
+                        setPasswordValidation(validation[key]);
+                    }
+                    if (key === 'confirmPassword') {
+                        setConfirmPasswordValidation(validation[key]);
+                    }
+                });
+                return;
+            }
         }
     };
 

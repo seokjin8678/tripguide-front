@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import Layout from '../../components/layout/Layout';
 import MyCard from '../../components/ui/MyCard';
 import { Label } from 'flowbite-react';
 import MyInput from '../../components/ui/MyInput';
@@ -12,6 +11,7 @@ import api from '../../utils/axios';
 import { useRouter } from 'next/router';
 import { useAppDispatch } from '../../hooks';
 import { modalActions } from '../../store/slices/modalSlice';
+import AuthLayout from '../../components/layout/AuthLayout';
 
 interface CreateTripPageProps {
 
@@ -98,11 +98,15 @@ const CreateTripPage = (props: CreateTripPageProps) => {
                 });
                 return;
             }
+            if (response.status === 401) {
+                router.push('/signin');
+                return;
+            }
         }
     };
 
     return (
-        <Layout>
+        <AuthLayout>
             <div className="p-4 md:p-10">
                 <MyCard>
                     <form className="flex flex-col gap-2" onSubmit={submitHandler}>
@@ -146,7 +150,7 @@ const CreateTripPage = (props: CreateTripPageProps) => {
                     </form>
                 </MyCard>
             </div>
-        </Layout>
+        </AuthLayout>
     );
 };
 export default CreateTripPage;

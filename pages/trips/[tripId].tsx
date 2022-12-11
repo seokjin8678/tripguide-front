@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Layout from '../../components/layout/Layout';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import React, { useEffect, useState } from 'react';
+import { useAppDispatch } from '../../hooks';
 import { useRouter } from 'next/router';
 import MyCard from '../../components/ui/MyCard';
 import Map from '../../components/Map';
@@ -9,6 +8,7 @@ import { TripDetail } from '../../models/TripDetail';
 import Marker from '../../components/Marker';
 import { Wrapper } from '@googlemaps/react-wrapper';
 import { modalActions } from '../../store/slices/modalSlice';
+import AuthLayout from '../../components/layout/AuthLayout';
 
 interface TripDetailPageProps {
 
@@ -16,10 +16,6 @@ interface TripDetailPageProps {
 
 const TripDetailPage = (props: TripDetailPageProps) => {
     const router = useRouter();
-    const isLogin = useAppSelector(state => state.auth.isLogin);
-    if (!isLogin) {
-        router.push('/signin?redirect=' + router.asPath);
-    }
     const [tripDetail, setTripDetail] = useState<TripDetail>();
     const {isReady} = router;
     const dispatch = useAppDispatch();
@@ -57,6 +53,10 @@ const TripDetailPage = (props: TripDetailPageProps) => {
                 }))
                 return;
             }
+            if (response.status === 401) {
+                router.push('/signin');
+                return;
+            }
         }
     };
 
@@ -68,7 +68,7 @@ const TripDetailPage = (props: TripDetailPageProps) => {
     }, [isReady]);
 
     return (
-        <Layout>
+        <AuthLayout>
             <div className="p-4 md:p-10">
                 {tripDetail &&
                     <MyCard>
@@ -96,7 +96,7 @@ const TripDetailPage = (props: TripDetailPageProps) => {
                         </Wrapper>
                     </MyCard>}
             </div>
-        </Layout>
+        </AuthLayout>
     );
 };
 export default TripDetailPage;

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import Layout from '../../components/layout/Layout';
 import { useRouter } from 'next/router';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import { Pagination } from 'flowbite-react';
 import { TripPreview } from '../../models/TripPreview';
 import MyCard from '../../components/ui/MyCard';
 import Link from 'next/link';
 import api from '../../utils/axios';
 import MyRating from '../../components/ui/MyRating';
+import { modalActions } from '../../store/slices/modalSlice';
+import AuthLayout from '../../components/layout/AuthLayout';
 
 interface TripsPageProps {
 
@@ -16,13 +17,10 @@ interface TripsPageProps {
 const TripsPage = (props: TripsPageProps) => {
     const router = useRouter();
     const {query, isReady} = router;
-    const isLogin = useAppSelector(state => state.auth.isLogin);
-    if (!isLogin) {
-        router.replace('/signin?redirect=' + router.asPath);
-    }
     const [tripPreviews, setTripPreviews] = useState<TripPreview[]>([]);
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
+    const dispatch = useAppDispatch();
 
     const getTripPreviews = async () => {
         try {
@@ -43,8 +41,16 @@ const TripsPage = (props: TripsPageProps) => {
             setTripPreviews(tripPreviews);
             setTotalPages(res.data.totalPages);
             setCurrentPage(res.data.number);
-        } catch (e) {
-
+        } catch (e: any) {
+            const response = e.response;
+            if (response.status === 404) {
+                dispatch(modalActions.showModal('서버가 응답하지 않습니다.'));
+                return;
+            }
+            if (response.status === 401) {
+                router.push('/signin');
+                return;
+            }
         }
     };
 
@@ -64,8 +70,8 @@ const TripsPage = (props: TripsPageProps) => {
     };
 
     return (
-        <Layout>
-            <div className="px-8 py-4 grid grid-cols-4 gap-x-4 gap-y-8">
+        <AuthLayout>
+            <div className="px-8 py-4 grid grid-cols-1 md:grid-cols-4 gap-x-4 gap-y-8">
                 {tripPreviews.map(trip => {
                     return (
                         <Link key={trip.id} href={`trips/${trip.id}`}>
@@ -99,7 +105,7 @@ const TripsPage = (props: TripsPageProps) => {
                     totalPages={totalPages}
                 />
             </div>
-        </Layout>
+        </AuthLayout>
     );
 };
 
