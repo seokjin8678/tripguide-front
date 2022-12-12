@@ -1,6 +1,5 @@
 import React, { HTMLInputTypeAttribute } from 'react';
 import { TextInput } from 'flowbite-react';
-import { TextInputColors } from 'flowbite-react/lib/esm/components/FormControls/TextInput/TextInput';
 
 interface MyInputProps {
     id: string,
@@ -8,7 +7,7 @@ interface MyInputProps {
     className?: string | undefined;
     required?: boolean,
     helperText?: string,
-    color?: keyof TextInputColors;
+    color?: string,
 }
 
 const MyInput = React.forwardRef<HTMLInputElement, MyInputProps>((props, ref) => {
