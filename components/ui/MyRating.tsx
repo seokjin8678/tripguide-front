@@ -2,7 +2,7 @@ import React from 'react';
 import { Rating } from 'flowbite-react';
 
 interface MyRatingProps {
-    key: string,
+    starkey: string,
     score: number,
     hideNumber?: boolean
     className?: string | undefined
@@ -12,15 +12,15 @@ const MyRating = (props: MyRatingProps) => {
     const stars = [];
     for (let i = 0; i < 4; i++) {
         if (props.score - 1 >= i) {
-            stars.push(<Rating.Star key={props.key + 'star' + i}/>);
+            stars.push(<Rating.Star key={props.starkey + 'star' + i}/>);
         } else {
-            stars.push(<Rating.Star key={props.key + 'star' + i} filled={false}/>);
+            stars.push(<Rating.Star key={props.starkey + 'star' + i} filled={false}/>);
         }
     }
     if (props.score === 5) {
-        stars.push(<Rating.Star key={props.key + 'star4'}/>);
+        stars.push(<Rating.Star key={props.starkey + 'star4'}/>);
     } else {
-        stars.push(<Rating.Star key={props.key + 'star4'} filled={false}/>);
+        stars.push(<Rating.Star key={props.starkey + 'star4'} filled={false}/>);
     }
 
     return (

@@ -88,7 +88,7 @@ const TripsPage = (props: TripsPageProps) => {
                                         <p className="text-2lg px-1">{trip.city}</p>
                                     </div>
                                 </div>
-                                <MyRating className='py-2' key={'trip' + trip.id} score={trip.score}/>
+                                <MyRating className='py-2' starkey={'trip' + trip.id} score={trip.score}/>
                                 <p className="font-normal text-gray-700 dark:text-gray-400">
                                     {trip.desc}
                                 </p>

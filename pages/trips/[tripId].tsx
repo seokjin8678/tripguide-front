@@ -34,7 +34,7 @@ const printComment = (comments: Comment[]) => {
                             {comment.author}
                         </p>
                         <span className="flex -ml-0.5 py-0.5 truncate">
-                            <MyRating className="py-1" key={'comment' + comment.id} score={comment.score}
+                            <MyRating className="py-1" starkey={'comment' + comment.id} score={comment.score}
                                       hideNumber={true}/>
                         </span>
                         <p className="truncate text-sm text-gray-500 dark:text-gray-400">
@@ -167,7 +167,7 @@ const TripDetailPage = (props: TripDetailPageProps) => {
                                     {tripDetail.author}
                                 </p>
                             </div>
-                            <MyRating className="py-1" key={'trip' + tripDetail.id} score={tripDetail.score}/>
+                            <MyRating className="py-1" starkey={'trip' + tripDetail.id} score={avgScore}/>
                             <p className="py-2 font-normal text-gray-700 dark:text-gray-400">
                                 {tripDetail.desc}
                             </p>
