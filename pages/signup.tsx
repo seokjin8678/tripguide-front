@@ -69,11 +69,11 @@ const SignUpPage = (props: SignUpPageProps) => {
                 }));
             }
         } catch (e: any) {
-            const response = e.response;
-            if (response.status === 404) {
+            if (e.code === 'ERR_NETWORK') {
                 dispatch(modalActions.showModal('서버가 응답하지 않습니다.'));
                 return;
             }
+            const response = e.response;
             if (response.status === 400) {
                 const validation = e.response.data.validation;
                 Object.keys(validation).forEach(key => {
