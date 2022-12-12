@@ -16,7 +16,7 @@ interface TripsPageProps {
 
 const TripsPage = (props: TripsPageProps) => {
     const router = useRouter();
-    const {query, isReady} = router;
+    const {query} = router;
     const [tripPreviews, setTripPreviews] = useState<TripPreview[]>([]);
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
@@ -91,7 +91,7 @@ const TripsPage = (props: TripsPageProps) => {
                                         <p className="text-2lg px-1">{trip.city}</p>
                                     </div>
                                 </div>
-                                <MyRating className='py-2' starkey={'trip' + trip.id} score={trip.score}/>
+                                <MyRating className="py-2" starkey={'trip' + trip.id} score={trip.score}/>
                                 <p className="font-normal text-gray-700 dark:text-gray-400">
                                     {trip.desc}
                                 </p>

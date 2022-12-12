@@ -61,7 +61,7 @@ const TripDetailPage = (props: TripDetailPageProps) => {
     const [avgScore, setAvgScore] = useState(0);
     const [totalComments, setTotalComments] = useState(0);
     const commentWriteRef = useRef<HTMLTextAreaElement>(null);
-    const {query} = router;
+    const {isReady, query} = router;
     const dispatch = useAppDispatch();
     const isLogin = useAppSelector(state => state.auth.isLogin);
     if (!isLogin) {
@@ -203,10 +203,10 @@ const TripDetailPage = (props: TripDetailPageProps) => {
     };
 
     useEffect(() => {
-        if (isLogin) {
+        if (isLogin && isReady) {
             getTripDetail();
         }
-    }, [isLogin]);
+    }, [isLogin, isReady]);
 
     return (
         <AuthLayout>
