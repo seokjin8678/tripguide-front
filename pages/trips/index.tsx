@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Pagination } from 'flowbite-react';
 import { TripPreview } from '../../models/TripPreview';
 import MyCard from '../../components/ui/MyCard';
@@ -21,6 +21,10 @@ const TripsPage = (props: TripsPageProps) => {
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const dispatch = useAppDispatch();
+    const isLogin = useAppSelector(state => state.auth.isLogin);
+    if (!isLogin) {
+        router.replace('/signin?redirect=' + router.asPath);
+    }
 
     const getTripPreviews = async () => {
         try {
@@ -56,11 +60,10 @@ const TripsPage = (props: TripsPageProps) => {
     };
 
     useEffect(() => {
-        if (!isReady) {
-            return;
+        if (isLogin) {
+            getTripPreviews();
         }
-        getTripPreviews();
-    }, [isReady, query]);
+    }, [isLogin]);
 
 
     const pageChangeHandler = (page: number) => {

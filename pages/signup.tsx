@@ -24,11 +24,7 @@ const SignUpPage = (props: SignUpPageProps) => {
     const [passwordValidation, setPasswordValidation] = useState('');
     const [confirmPasswordValidation, setConfirmPasswordValidation] = useState('');
     const dispatch = useAppDispatch();
-    const router = useRouter();
     const isLogin = useAppSelector(state => state.auth.isLogin);
-    if (isLogin) {
-        router.push('/');
-    }
 
     const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -97,37 +93,42 @@ const SignUpPage = (props: SignUpPageProps) => {
 
     return (
         <Layout>
-            <div className="body-bg px-8 md:px-0">
-                <main className="bg-white max-w-lg mx-auto p-8 md:p-12 rounded-lg shadow-2xl">
-                    <section>
-                        <h3 className="font-bold text-gray-700 text-2xl">새로운 계정을 등록합니다.</h3>
-                    </section>
-                    <section className="mt-5">
-                        <form className="flex flex-col" onSubmit={submitHandler}>
-                            <Label className="my-2 block" htmlFor="email" value="Email"/>
-                            <MyInput required color={emailValidation ? 'failure' : undefined}
-                                     helperText={emailValidation ? emailValidation : undefined} id="email" type="email"
-                                     ref={emailInputRef}/>
-                            <Label className="my-2 block" htmlFor="nickname" value="Nickname"/>
-                            <MyInput required color={nicknameValidation ? 'failure' : undefined}
-                                     helperText={nicknameValidation ? nicknameValidation : undefined} id="nickname"
-                                     ref={nickNameInputRef}/>
-                            <Label className="my-2 block" htmlFor="password" value="Password"/>
-                            <MyInput required color={passwordValidation ? 'failure' : undefined}
-                                     helperText={passwordValidation ? passwordValidation : undefined} id="password"
-                                     type="password" ref={passwordInputRef}/>
-                            <Label className="my-2 block" htmlFor="confirmPassword" value="Confirm Password"/>
-                            <MyInput required color={confirmPasswordValidation ? 'failure' : undefined}
-                                     helperText={confirmPasswordValidation ? confirmPasswordValidation : undefined}
-                                     id="confirmPassword" type="password"
-                                     ref={confirmPasswordInputRef}/>
-                            <MyButton className="mt-8 bg-blue-600" type="submit">
-                                회원가입
-                            </MyButton>
-                        </form>
-                    </section>
-                </main>
-            </div>
+            {!isLogin ?
+                <div className="body-bg px-8 md:px-0">
+                    <main className="bg-white max-w-lg mx-auto p-8 md:p-12 rounded-lg shadow-2xl">
+                        <section>
+                            <h3 className="font-bold text-gray-700 text-2xl">새로운 계정을 등록합니다.</h3>
+                        </section>
+                        <section className="mt-5">
+                            <form className="flex flex-col" onSubmit={submitHandler}>
+                                <Label className="my-2 block" htmlFor="email" value="Email"/>
+                                <MyInput required color={emailValidation ? 'failure' : undefined}
+                                         helperText={emailValidation ? emailValidation : undefined} id="email" type="email"
+                                         ref={emailInputRef}/>
+                                <Label className="my-2 block" htmlFor="nickname" value="Nickname"/>
+                                <MyInput required color={nicknameValidation ? 'failure' : undefined}
+                                         helperText={nicknameValidation ? nicknameValidation : undefined} id="nickname"
+                                         ref={nickNameInputRef}/>
+                                <Label className="my-2 block" htmlFor="password" value="Password"/>
+                                <MyInput required color={passwordValidation ? 'failure' : undefined}
+                                         helperText={passwordValidation ? passwordValidation : undefined} id="password"
+                                         type="password" ref={passwordInputRef}/>
+                                <Label className="my-2 block" htmlFor="confirmPassword" value="Confirm Password"/>
+                                <MyInput required color={confirmPasswordValidation ? 'failure' : undefined}
+                                         helperText={confirmPasswordValidation ? confirmPasswordValidation : undefined}
+                                         id="confirmPassword" type="password"
+                                         ref={confirmPasswordInputRef}/>
+                                <MyButton className="mt-8 bg-blue-600" type="submit">
+                                    회원가입
+                                </MyButton>
+                            </form>
+                        </section>
+                    </main>
+                </div> :
+                <div className='mx-auto'>
+                    <p className='text-xl font-bold'>이미 로그인되어 있습니다!</p>
+                </div>
+            }
         </Layout>
     );
 };

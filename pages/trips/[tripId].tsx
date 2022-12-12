@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useRouter } from 'next/router';
 import MyCard from '../../components/ui/MyCard';
 import Map from '../../components/Map';
@@ -61,8 +61,12 @@ const TripDetailPage = (props: TripDetailPageProps) => {
     const [avgScore, setAvgScore] = useState(0);
     const [totalComments, setTotalComments] = useState(0);
     const commentWriteRef = useRef<HTMLTextAreaElement>(null);
-    const {isReady, query} = router;
+    const {query} = router;
     const dispatch = useAppDispatch();
+    const isLogin = useAppSelector(state => state.auth.isLogin);
+    if (!isLogin) {
+        router.replace('/signin?redirect=' + router.asPath);
+    }
 
     useEffect(() => {
         if (tripDetail) {
@@ -199,11 +203,10 @@ const TripDetailPage = (props: TripDetailPageProps) => {
     };
 
     useEffect(() => {
-        if (!isReady) {
-            return;
+        if (isLogin) {
+            getTripDetail();
         }
-        getTripDetail();
-    }, [isReady]);
+    }, [isLogin]);
 
     return (
         <AuthLayout>

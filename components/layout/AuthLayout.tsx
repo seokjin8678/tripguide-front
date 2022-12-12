@@ -8,14 +8,10 @@ interface AuthLayoutProps {
 }
 
 const AuthLayout = (props: AuthLayoutProps) => {
-    const router = useRouter();
     const isLogin = useAppSelector(state => state.auth.isLogin);
-    if (!isLogin) {
-        router.replace('/signin?redirect=' + router.asPath);
-    }
     return (
         <Layout>
-            {props.children}
+            {isLogin && props.children}
         </Layout>
     );
 };

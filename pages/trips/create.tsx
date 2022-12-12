@@ -9,7 +9,7 @@ import MyButton from '../../components/ui/MyButton';
 import { TripCreateRequest } from '../../models/TripCreateRequest';
 import api from '../../utils/axios';
 import { useRouter } from 'next/router';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { modalActions } from '../../store/slices/modalSlice';
 import AuthLayout from '../../components/layout/AuthLayout';
 
@@ -19,7 +19,6 @@ interface CreateTripPageProps {
 
 const CreateTripPage = (props: CreateTripPageProps) => {
     const router = useRouter();
-
     const titleInputRef = useRef<HTMLInputElement>(null);
     const descInputRef = useRef<HTMLInputElement>(null);
     const countryInputRef = useRef<HTMLInputElement>(null);
@@ -32,6 +31,10 @@ const CreateTripPage = (props: CreateTripPageProps) => {
     const [contentsValidation, setContentsValidation] = useState('');
     const [latLng, setLatLng] = useState<google.maps.LatLng>();
     const dispatch = useAppDispatch();
+    const isLogin = useAppSelector(state => state.auth.isLogin);
+    if (!isLogin) {
+        router.replace('/signin?redirect=' + router.asPath);
+    }
 
     const onClickMap = (e: google.maps.MapMouseEvent) => {
         setLatLng(e.latLng!);

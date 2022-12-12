@@ -23,15 +23,7 @@ const SignInPage = (props: SignInPageProps) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const isLogin = useAppSelector(state => state.auth.isLogin);
-    const {isReady} = router;
-    useEffect(() => {
-        if (!isReady) {
-            return;
-        }
-        if (isLogin && !router.query.redirect) {
-            router.push('/');
-        }
-    }, [isReady]);
+    const {query} = router;
 
     const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -49,8 +41,8 @@ const SignInPage = (props: SignInPageProps) => {
         try {
             const res = await api.post(url, signInRequest);
             dispatch(authActions.signIn(res.data.result));
-            const redirectUrl = router.query.redirect;
-            if (redirectUrl && redirectUrl !== 'signin') {
+            const redirectUrl = query.redirect;
+            if (redirectUrl) {
                 router.push(redirectUrl.toString());
             } else {
                 router.push('/');
@@ -72,7 +64,7 @@ const SignInPage = (props: SignInPageProps) => {
 
     return (
         <Layout>
-            {!isLogin &&
+            {!isLogin ?
                 <div className="body-bg px-8 md:px-0">
                     <main className="bg-white max-w-lg mx-auto p-8 md:p-12 rounded-lg shadow-2xl">
                         <section>
@@ -100,6 +92,9 @@ const SignInPage = (props: SignInPageProps) => {
                             </div>
                         </section>
                     </main>
+                </div> :
+                <div className='mx-auto'>
+                    <p className='text-xl font-bold'>이미 로그인되어 있습니다!</p>
                 </div>
             }
         </Layout>
